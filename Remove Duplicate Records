@@ -1,0 +1,24 @@
+function removeDuplicates() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var dataRange = sheet.getRange('A:D'); // Assumes the data is in columns A-D
+  var values = dataRange.getValues();
+  var numRows = values.length;
+  
+  var uniqueRows = [];
+  var uniqueValues = [];
+  
+  for (var i = 0; i < numRows; i++) {
+    var row = values[i];
+    var key = row.join('|'); // Concatenate values into a single string
+    if (uniqueRows.indexOf(key) === -1) {
+      uniqueRows.push(key);
+      uniqueValues.push(row);
+    }
+  }
+  
+  // Clear existing data
+  sheet.getRange(1, 1, numRows, 4).clear();
+  
+  // Write unique values back to the sheet
+  sheet.getRange(1, 1, uniqueValues.length, 4).setValues(uniqueValues);
+}
