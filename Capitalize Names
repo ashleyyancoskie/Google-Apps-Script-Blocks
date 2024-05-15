@@ -1,0 +1,25 @@
+function capitalizeNames() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var lastRow = sheet.getLastRow();
+  var range = sheet.getRange("A2:B" + lastRow); // Assuming first names are in column A and last names are in column B, and data starts from row 2
+  
+  var values = range.getValues();
+  var updatedValues = [];
+  
+  for (var i = 0; i < values.length; i++) {
+    var firstName = values[i][0];
+    var lastName = values[i][1];
+    
+    if (firstName) {
+      firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+    }
+    
+    if (lastName) {
+      lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+    }
+    
+    updatedValues.push([firstName, lastName]);
+  }
+  
+  range.setValues(updatedValues);
+}
